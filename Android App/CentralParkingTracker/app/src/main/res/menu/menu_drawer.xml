@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group>
+
+        <item
+            android:id="@+id/home"
+            android:title="Home"
+            />
+
+        <item
+            android:id="@+id/p1"
+
+            android:title="Parking Lot #1"
+             />
+
+        <item
+            android:id="@+id/p2"
+            android:title="Parking Lot #2" />
+
+    </group>
+
+
+</menu>

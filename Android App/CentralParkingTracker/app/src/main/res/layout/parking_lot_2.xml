@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    android:id="@+id/parkinglot_2"
+    tools:context=".MainActivity"
+    >
+
+    <include
+        android:id="@+id/include"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/drawer_layout" />
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background"
+        android:fitsSystemWindows="true"
+        app:elevation="0dip"
+        app:layout_constraintTop_toTopOf="parent"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarAdd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            app:title="@string/header_parking_lot2"
+            app:titleTextAppearance="@style/HeaderText"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/p2_2">
+
+            <ImageView
+                android:id="@+id/s0taken"
+                android:layout_width="58dp"
+                android:layout_height="61dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.22"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.249"
+                app:srcCompat="@drawable/circleclosed"
+                android:contentDescription="@string/spot_taken" />
+
+            <ImageView
+                android:id="@+id/s0open"
+                android:layout_width="58dp"
+                android:layout_height="61dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.22"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.249"
+                app:srcCompat="@drawable/circleopen"
+                android:contentDescription="@string/spot_open"/>
+
+            <ImageView
+                android:id="@+id/s1open"
+                android:layout_width="58dp"
+                android:layout_height="61dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.22"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.397"
+                app:srcCompat="@drawable/circleopen"
+                android:contentDescription="@string/spot_open"/>
+
+            <ImageView
+                android:id="@+id/s1taken"
+                android:layout_width="58dp"
+                android:layout_height="61dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.22"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.397"
+                app:srcCompat="@drawable/circleclosed"
+                android:contentDescription="@string/spot_taken"/>
+
+            <ImageView
+                android:id="@+id/s2open"
+                android:layout_width="58dp"
+                android:layout_height="61dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.22"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.534"
+                app:srcCompat="@drawable/circleopen"
+                android:contentDescription="@string/spot_open"/>
+
+            <ImageView
+                android:id="@+id/s2taken"
+                android:layout_width="58dp"
+                android:layout_height="61dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.22"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.534"
+                app:srcCompat="@drawable/circleclosed"
+                android:contentDescription="@string/spot_taken"/>
+
+            <ImageView
+                android:id="@+id/s3taken"
+                android:layout_width="58dp"
+                android:layout_height="61dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.22"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.671"
+                app:srcCompat="@drawable/circleclosed"
+                android:contentDescription="@string/spot_taken"
+                />
+
+            <ImageView
+                android:id="@+id/s3open"
+                android:layout_width="58dp"
+                android:layout_height="61dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.22"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.671"
+                app:srcCompat="@drawable/circleopen"
+                android:contentDescription="@string/spot_open"
+                />
+
+            <ImageView
+                android:id="@+id/s4taken"
+                android:layout_width="58dp"
+                android:layout_height="61dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.75"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.249"
+                app:srcCompat="@drawable/circleclosed"
+                android:contentDescription="@string/spot_taken"/>
+
+            <ImageView
+                android:id="@+id/s4open"
+                android:layout_width="58dp"
+                android:layout_height="61dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.75"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.249"
+                app:srcCompat="@drawable/circleopen"
+                android:contentDescription="@string/spot_open"/>
+
+            <ImageView
+                android:id="@+id/s5taken"
+                android:layout_width="58dp"
+                android:layout_height="61dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.75"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.397"
+                app:srcCompat="@drawable/circleclosed"
+                android:contentDescription="@string/spot_taken"/>
+
+            <ImageView
+                android:id="@+id/s5open"
+                android:layout_width="58dp"
+                android:layout_height="61dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.75"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.397"
+                app:srcCompat="@drawable/circleopen"
+                android:contentDescription="@string/spot_open"/>
+
+            <ImageView
+                android:id="@+id/s6taken"
+                android:layout_width="58dp"
+                android:layout_height="61dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.75"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.534"
+                app:srcCompat="@drawable/circleclosed"
+                android:contentDescription="@string/spot_taken"/>
+
+            <ImageView
+                android:id="@+id/s6open"
+                android:layout_width="58dp"
+                android:layout_height="61dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.75"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.534"
+                app:srcCompat="@drawable/circleopen"
+                android:contentDescription="@string/spot_open"/>
+
+            <ImageView
+                android:id="@+id/s7taken"
+                android:layout_width="58dp"
+                android:layout_height="61dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.75"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.671"
+                app:srcCompat="@drawable/circleclosed"
+                android:contentDescription="@string/spot_taken"/>
+
+            <ImageView
+                android:id="@+id/s7open"
+                android:layout_width="58dp"
+                android:layout_height="61dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.75"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.671"
+                app:srcCompat="@drawable/circleopen"
+                android:contentDescription="@string/spot_open"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_view"
+        android:background="@drawable/background"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/drawer_header"
+        app:layout_constraintStart_toStartOf="@+id/include"
+        app:menu="@menu/menu_drawer"
+        app:itemTextAppearance="@style/menu_text_style"
+        android:theme="@style/NavigationTheme"/>
+
+</androidx.drawerlayout.widget.DrawerLayout>

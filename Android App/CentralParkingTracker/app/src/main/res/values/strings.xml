@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Central Parking Tracker</string>
+
+
+    <string name="nav_open">Open Navigation Drawer</string>
+    <string name="nav_closed">Close Navigation Drawer</string>
+
+    <!-- Image descriptions -->
+    <string name="spot_open">Parking Spot Open</string>
+    <string name="spot_taken">Parking Spot Taken</string>
+
+    <!-- Header Strings -->
+    <string name="header_parking_lot1">Parking Lot #1</string>
+    <string name="header_parking_lot2">Parking Lot #2</string>
+</resources>
