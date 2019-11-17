@@ -5,7 +5,7 @@
     android:id="@+id/parkinglot_1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@color/backgroundColor"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -20,7 +20,7 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/background"
+        android:background="@color/backgroundColor"
         android:fitsSystemWindows="true"
         app:elevation="0dip"
         app:layout_constraintTop_toTopOf="parent"
@@ -220,7 +220,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@drawable/background"
+        android:background="@color/backgroundColor"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/drawer_header"
         app:layout_constraintStart_toStartOf="@+id/include"

@@ -2,10 +2,11 @@
 <resources>
     <color name="colorPrimary">#BEFFFFFF</color>
     <color name="colorPrimaryDark">#2B2B2B</color>
-    <color name="colorAccent">#243030</color>
+    <color name="colorAccent">#2A3838</color>
     <color name="backgroundColor">#FFFFFF</color>
     <color name="open">#3DA242</color>
     <color name="text">#FFFFFF</color>
+
     <color name="circle_outline">#ffffff</color>
     <color name="color_card">#243030</color>
 </resources>

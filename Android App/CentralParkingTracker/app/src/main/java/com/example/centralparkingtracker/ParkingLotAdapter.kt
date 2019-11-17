@@ -17,6 +17,8 @@ class ParkingLotAdapter constructor(private var parkinglots: List<ParkingLotMode
                                   private val listener: ParkingLotListener) :
     RecyclerView.Adapter<ParkingLotAdapter.MainHolder>(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
+    var parkinglot = ParkingLotModel()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
         return MainHolder(
             LayoutInflater.from(parent?.context).inflate(
@@ -28,7 +30,7 @@ class ParkingLotAdapter constructor(private var parkinglots: List<ParkingLotMode
     }
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
-        val parkinglot = parkinglots[holder.adapterPosition]
+        parkinglot = parkinglots[holder.adapterPosition]
         holder.bind(parkinglot, listener)
         holder.mapView.onCreate(null)
         holder.mapView.getMapAsync(this)
@@ -48,10 +50,10 @@ class ParkingLotAdapter constructor(private var parkinglots: List<ParkingLotMode
     }
     override fun onMapReady(map: GoogleMap){
         mMap = map
-        var loc : LatLng = LatLng(43.586303, -84.775202)
+        var loc : LatLng = LatLng(parkinglot.latitude, parkinglot.longitude)
 
         val options = MarkerOptions()
-            .title("Reminder Location")
+            .title("Parking Lot Loction")
             .snippet("GPS : " + loc.toString())
             .draggable(true)
             .position(loc)

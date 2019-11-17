@@ -34,12 +34,12 @@ class ParkingLotActivity2: AppCompatActivity(), NavigationView.OnNavigationItemS
         setContentView(R.layout.parking_lot_2)
         setSupportActionBar(toolbarAdd)
         toolbarAdd.title = "Parking Lot #2"
-        dumbydata()
-        init()
+        dummydata()
+        addDrawer()
     }
 
 
-    private fun init(){
+    private fun addDrawer(){
         val toggle = ActionBarDrawerToggle(Activity(), parkinglot_2, toolbarAdd, R.string.nav_open, R.string.nav_closed)
         parkinglot_2.addDrawerListener(toggle)
         toggle.syncState()
@@ -47,8 +47,8 @@ class ParkingLotActivity2: AppCompatActivity(), NavigationView.OnNavigationItemS
     }
 
 
-    override fun onNavigationItemSelected(p0: MenuItem): Boolean {
-        when(p0.itemId){
+    override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
+        when(menuItem.itemId){
             R.id.p1 ->{
                 startActivity(intentFor<ParkingLotActivity>())
                 finish()
@@ -56,17 +56,19 @@ class ParkingLotActivity2: AppCompatActivity(), NavigationView.OnNavigationItemS
             R.id.p2 ->{
             }
             R.id.home->{
+                startActivity(intentFor<HomeActivity>())
+                finish()
+            }
+            R.id.cmu_list->{
                 startActivity(intentFor<MainActivity>())
                 finish()
             }
-
-
         }
         parkinglot_2.closeDrawer(GravityCompat.START)
         return true
     }
 
-    private fun dumbydata(){
+    private fun dummydata(){
         s0open.isVisible = true
         s1taken.isVisible = true
         s2taken.isVisible = true

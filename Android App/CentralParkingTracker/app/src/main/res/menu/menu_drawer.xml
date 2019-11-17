@@ -5,12 +5,13 @@
 
         <item
             android:id="@+id/home"
-            android:title="Home"
+            android:title="Area's"
             />
-
+        <item
+            android:id="@+id/cmu_list"
+            android:title="CMU List"/>
         <item
             android:id="@+id/p1"
-
             android:title="Parking Lot #1"
              />
 

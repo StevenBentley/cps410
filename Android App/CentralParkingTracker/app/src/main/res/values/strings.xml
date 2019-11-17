@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Central Parking Tracker</string>
+    <string name="app_name">Parking Tracker</string>
 
 
     <string name="nav_open">Open Navigation Drawer</string>

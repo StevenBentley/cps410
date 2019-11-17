@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_centerInParent="true"
+    android:layout_marginTop="40dp"
+    android:layout_marginBottom="10dp"
+    android:layout_marginHorizontal="20dp"
+    android:elevation="24dp"
+    app:cardCornerRadius="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        android:orientation="vertical"
+        android:background="@color/colorAccent">
+
+        <TextView
+            android:id="@+id/area_of_lots"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:textColor="@color/text"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/numOfLots"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/text"
+            android:textSize="20dp" />
+
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
