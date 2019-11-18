@@ -65,3 +65,6 @@ target/
 # Vim python-mode
 .ropeproject
 .[cpsi]*
+
+
+parking_picture/mask_rcnn_coco.h5
