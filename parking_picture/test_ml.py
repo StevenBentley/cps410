@@ -92,12 +92,13 @@ def analyze_images_using_model(model, image_dir):
             # Need some type of model object to hold previous images
             # parked car locations. This is just for now
             parked_car_boxes = None
-            check_open_spots(parked_car_boxes)
+            check_open_spots(parked_car_boxes, r)
+        print ("------------------img done---------------------------------")
 
             # lot_data = check_open_spots...
             # return lot_data
 
-def check_open_spots(parked_car_boxes):
+def check_open_spots(parked_car_boxes, r):
     # try:
         # parked_car_boxes = ParkingLotSpots.objects.get(name=name)
     #except:
