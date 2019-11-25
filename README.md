@@ -1,6 +1,6 @@
 # CPS410-F19-Team01
 
-Project name: Kick-Ass Parking Tracker “KAPT”
+Project name: Central Parking Tracker "CPT"
 Team members (Fname Lname gitid): Namuunbadralt Zolboot wekapidia, Nicholas Gardner gardn1nw, Steven Bentley StevenBentley , Thaddeus Warner warne2tj
 Key Users: Schools and businesses
 Key Features:
