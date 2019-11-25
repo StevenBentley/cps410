@@ -11,7 +11,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['parking-tracker.azurewebsites.net']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -98,6 +97,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = ''
 
  # For image uploads
 MEDIA_ROOT = ''
