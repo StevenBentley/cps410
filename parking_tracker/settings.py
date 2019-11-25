@@ -10,7 +10,7 @@ PI_SECRET_KEY = {'PIPUBLICAPIKEY': b'91I8sOjqp6hIE99o'}
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['parking-tracker.azurewebsites.net']
+ALLOWED_HOSTS = ['parking-tracker.azurewebsites.net', 'localhost']
 
 # Application definition
 

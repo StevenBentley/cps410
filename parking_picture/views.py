@@ -8,7 +8,8 @@ import json
 import os
 import hashlib, base64, hmac
 # from .test_ml import get_data
-from .models import ParkingPicture, ParkingLotSpots
+from .models import ParkingLot, ParkingPicture, ParkingLotSpots
+from .forms import ParkingPictureForm
 
 def index(request):
     # return frontend app..
@@ -34,6 +35,7 @@ def parking_picture(request):
                 return HttpResponse(401)
 
         except KeyError:
+            print("hello")
             return HttpResponse(400)
 
         form = ParkingPictureForm(request.POST, request.FILES)
@@ -55,6 +57,7 @@ def parking_data(request, lot):
 
 
 def handle_file_upload(lot, file):
+    store_picture(lot, file)
     now = datetime.datetime.now().strftime("%m-%d-%y_%H-%M-%S")
     file_name = lot + "_" + now
     file_path = 'media/' + file_name + '.jpg'
@@ -62,3 +65,12 @@ def handle_file_upload(lot, file):
     with open(file_path, 'wb+') as destination:
         for chunk in file.chunks():
             destination.write(chunk)
+
+def store_picture(lot, file):
+    try:
+        parking_lot = ParkingLot.objects.get(lot_name=lot)
+    except:
+        parking_lot = ParkingLot.objects.create(lot_name=lot)
+        parking_lot.save()
+    parking_picture = ParkingPicture.objects.create(parking_lot=parking_lot, picture=file)
+    parking_picture.save()

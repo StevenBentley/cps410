@@ -14,7 +14,7 @@ class ParkingPicture(models.Model):
     date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.parking_lot.name + "parking pictures"
+        return self.parking_lot.lot_name + "parking pictures"
 
 class ParkingLotSpots(models.Model):
     parking_lot = models.ForeignKey(ParkingLot, on_delete=models.CASCADE)
