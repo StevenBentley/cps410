@@ -57,14 +57,18 @@ def parking_data(request, lot):
 
 
 def handle_file_upload(lot, file):
-    store_picture(lot, file)
+    print("111")
+    print(file)
+    print("222")
     now = datetime.datetime.now().strftime("%m-%d-%y_%H-%M-%S")
-    file_name = lot + "_" + now
-    file_path = 'media/' + file_name + '.jpg'
-    print(file_path)
-    with open(file_path, 'wb+') as destination:
+    print(file)
+    file_name = str(file)
+    file_name = lot + "_" + now + file_name[file_name.find('.'):]
+    print(file_name)
+    with open("media/" + file_name, 'wb+') as destination:
         for chunk in file.chunks():
             destination.write(chunk)
+    store_picture(lot, file_name)
 
 def store_picture(lot, file):
     try:
