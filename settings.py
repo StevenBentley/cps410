@@ -9,8 +9,7 @@ SECRET_KEY = '52ce18efzu=6p*x7v7($9$j1eqxdh&*=5)wuwund&4f50wo*b4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['http://parking-tracker.azurewebsites.net',
-    'https://parking-tracker.azurewebsites.net']
+ALLOWED_HOSTS = ['parking-tracker.azurewebsites.net']
 
 
 # Application definition
