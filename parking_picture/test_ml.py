@@ -46,7 +46,11 @@ def load_pre_trained_weights(model):
 def analyze_images_using_model(model, image_dir):
     for img_file in os.listdir(image_dir):
         # Read image in color using OpenCV
-        img = cv2.imread('../media/' + img_file, 1)
+        img = cv2.imread('../media/' + img_file)
+        cv2.imshow('img', img)
+        cv2.waitKey()
+        cv2.imshow('img', img)
+        cv2.waitKey()
         # OpenCV is in BGR mode. Convert to RGB Mode for RCNN
         rgb_img = img[:, :, ::-1]
         # Run the image through the Mask R-CNN model to get results.
@@ -80,25 +84,25 @@ def analyze_images_using_model(model, image_dir):
             # Draw the box
             cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 1)
 
-            # Show the frame of video on the screen
-            #not working right now
-            #cv2.imshow('image', img)
+        # Show the frame of video on the screen
+        # not working right now
+        print(img)
+        cv2.imshow('img', img)
+        # Hit 'q' to quit
+        cv2.waitKey()
 
-            # Hit 'q' to quit
-            #if cv2.waitKey(1) & 0xFF == ord('q'):
-            #    break
-
-            # Location of parking spaces
-            # Need some type of model object to hold previous images
-            # parked car locations. This is just for now
-            parked_car_boxes = None
-            check_open_spots(parked_car_boxes, r)
+        # Location of parking spaces
+        # Need some type of model object to hold previous images
+        # parked car locations. This is just for now
+        parked_car_boxes = car_boxes
+        check_open_spots(parked_car_boxes, r, img)
         print ("------------------img done---------------------------------")
+        cv2.destroyAllWindows()
 
-            # lot_data = check_open_spots...
-            # return lot_data
+        # lot_data = check_open_spots...
+        # return lot_data
 
-def check_open_spots(parked_car_boxes, r):
+def check_open_spots(parked_car_boxes, r, img):
     # try:
         # parked_car_boxes = ParkingLotSpots.objects.get(name=name)
     #except:
@@ -131,14 +135,14 @@ def check_open_spots(parked_car_boxes, r):
             # it by more than 0.15 using IoU
             if max_IoU_overlap < 0.15:
                 # Parking space not occupied! Draw a green box around it
-                cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 3)
+                cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 3)
             else:
                 # Parking space is still occupied - draw a red box around it
-                cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 255), 1)
+                cv2.rectangle(img, (x1, y1), (x2, y2), (0, 0, 255), 1)
 
             # Write the IoU measurement inside the box
             font = cv2.FONT_HERSHEY_DUPLEX
-            cv2.putText(frame, f"{max_IoU_overlap:0.2}", (x1 + 6, y2 - 6), font, 0.3, (255, 255, 255))
+            cv2.putText(img, f"{max_IoU_overlap:0.2}", (x1 + 6, y2 - 6), font, 0.3, (255, 255, 255))
 
         # return new lot_data
 

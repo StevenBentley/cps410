@@ -4,7 +4,6 @@ import os
 
 from .test_ml import get_data
 from .models import ParkingPicture, ParkingLotSpots
-from .forms import ParkingPictureForm
 
 def index(request):
     # return frontend app..
