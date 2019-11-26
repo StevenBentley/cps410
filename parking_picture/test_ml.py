@@ -1,14 +1,14 @@
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
-import os
+import os, ast
 import numpy as np
 import cv2
 import mrcnn.config
 import mrcnn.utils
 from mrcnn.model import MaskRCNN
 from pathlib import Path
-#from .models import ParkingLotSpots
+from .models import ParkingLot, ParkingLotSpots
 
 
 # Configuration that will be used by the Mask-RCNN library
@@ -30,16 +30,16 @@ def get_car_boxes(boxes, class_ids):
 
     return np.array(car_boxes)
 
-def configure_rcnn_model():
+def configure_rcnn_model(BASE_DIR):
     # Directory to save logs and trained model
-    MODEL_DIR = os.path.join(ROOT_DIR, "logs")
+    MODEL_DIR = os.path.join(BASE_DIR, "logs")
     # Create a Mask-RCNN model in inference mode
     model = MaskRCNN(mode="inference", model_dir=MODEL_DIR, config=MaskRCNNConfig())
     return model
 
-def load_pre_trained_weights(model):
+def load_pre_trained_weights(BASE_DIR, model):
     # Local path to trained weights file
-    COCO_MODEL_PATH = os.path.join(ROOT_DIR, "mask_rcnn_coco.h5")
+    COCO_MODEL_PATH = os.path.join(BASE_DIR, "mask_rcnn_coco.h5")
     # Download COCO trained weights from Releases if needed
     if not os.path.exists(COCO_MODEL_PATH):
         mrcnn.utils.download_trained_weights(COCO_MODEL_PATH)
@@ -50,11 +50,11 @@ def load_pre_trained_weights(model):
 def analyze_images_using_model(model, image_dir):
     for img_file in os.listdir(image_dir):
         # Read image in color using OpenCV
-        img = cv2.imread('../media/' + img_file)
+        img = cv2.imread(image_dir + img_file)
         cv2.imshow('img', img)
         cv2.waitKey()
-        cv2.imshow('img', img)
-        cv2.waitKey()
+        #cv2.imshow('img', img)
+        #cv2.waitKey()
         # OpenCV is in BGR mode. Convert to RGB Mode for RCNN
         rgb_img = img[:, :, ::-1]
         # Run the image through the Mask R-CNN model to get results.
@@ -77,6 +77,7 @@ def analyze_images_using_model(model, image_dir):
 
         # Filter the results to only grab the car / truck bounding boxes
         car_boxes = get_car_boxes(r['rois'], r['class_ids'])
+
         print("Cars found in picture:")
 
         # Draw each box on the frame
@@ -89,84 +90,78 @@ def analyze_images_using_model(model, image_dir):
             cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 1)
 
             # Show the frame of video on the screen
-            cv2.imshow('img', img)
+            #cv2.imshow('img', img)
             # Hit 'q' to quit
-            cv2.waitKey()
+            #cv2.waitKey()
 
-        # Location of parking spaces
-        # Need some type of model object to hold previous images
-        # parked car locations. This is just for now
-        parked_car_boxes = car_boxes
-        check_open_spots(parked_car_boxes, r, img)
+
+        check_open_spots("lot 1", r, img)
         print ("------------------img done---------------------------------")
         cv2.destroyAllWindows()
 
         # lot_data = check_open_spots...
         # return lot_data
 
-def check_open_spots(parked_car_boxes, r, img):
-    # try:
-        # parked_car_boxes = ParkingLotSpots.objects.get(name=name)
-    #except:
-    if parked_car_boxes is None:
-        # Somehow we need to set this variable to have a parked car in each location
-        # for now we just use the whats currently there and check against it later
-        # Save the location of each car as a parking space box and go to the next frame.
-        parked_car_boxes = get_car_boxes(r['rois'], r['class_ids'])
-        # ParkingLotSpots.objects.create(lot_name=name, data=parked_car_boxes)
-    else:
-        # We already know where the parking spaces are. Check if any are currently unoccupied.
+def check_open_spots(parking_lot_name, r, img):
 
-        # Get where cars are currently located in the frame
-        car_boxes = get_car_boxes(r['rois'], r['class_ids'])
+    # Somehow we need to set this variable to have a parked car in each location
+    # for now we just use the whats currently there and check against it later
+    # Save the location of each car as a parking space box and go to the next frame.
+    parking_spaces = None
+    try:
+        parking_lot = ParkingLot.objects.get(lot_name=parking_lot_name)
+        parking_spaces = ParkingLotSpots.objects.get(parking_lot=parking_lot).parking_spots
+    except Exception as e:
+        print(e)
+        return
 
-        # See how much those cars overlap with the known parking spaces
-        overlaps = mrcnn.utils.compute_overlaps(parked_car_boxes, car_boxes)
+    parking_space_boxes = convert_parking_spots_str_to_np_ndarray(parking_spaces)
+    print(parking_space_boxes)
+    print("done")
 
-        # Loop through each known parking space box
-        for parking_area, overlap_areas in zip(parked_car_boxes, overlaps):
+    # Now we know where the parking spaces are. Check if any are currently unoccupied.
+    # Get where cars are currently located in the picture
+    car_boxes = get_car_boxes(r['rois'], r['class_ids'])
 
-            # For this parking space, find the max amount it was covered by any
-            # car that was detected in our image (doesn't really matter which car)
-            max_IoU_overlap = np.max(overlap_areas)
+    # See how much those cars overlap with the known parking spaces
+    overlaps = mrcnn.utils.compute_overlaps(parking_space_boxes, car_boxes)
 
-            # Get the top-left and bottom-right coordinates of the parking area
-            y1, x1, y2, x2 = parking_area
+    # Loop through each known parking space box
+    for parking_area, overlap_areas in zip(parking_space_boxes, overlaps):
 
-            # Check if the parking space is occupied by seeing if any car overlaps
-            # it by more than 0.15 using IoU
-            if max_IoU_overlap < 0.15:
-                # Parking space not occupied! Draw a green box around it
-                cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 3)
-            else:
-                # Parking space is still occupied - draw a red box around it
-                cv2.rectangle(img, (x1, y1), (x2, y2), (0, 0, 255), 1)
+        # For this parking space, find the max amount it was covered by any
+        # car that was detected in our image (doesn't really matter which car)
+        max_IoU_overlap = np.max(overlap_areas)
+
+        # Get the top-left and bottom-right coordinates of the parking area
+        y1, x1, y2, x2 = parking_area
+
+        # Check if the parking space is occupied by seeing if any car overlaps
+        # it by more than 0.15 using IoU
+        if max_IoU_overlap < 0.15:
+            # Parking space not occupied! Draw a green box around it
+            cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 3)
+        else:
+            # Parking space is still occupied - draw a red box around it
+            cv2.rectangle(img, (x1, y1), (x2, y2), (0, 0, 255), 1)
 
             # Write the IoU measurement inside the box
             font = cv2.FONT_HERSHEY_DUPLEX
             cv2.putText(img, f"{max_IoU_overlap:0.2}", (x1 + 6, y2 - 6), font, 0.3, (255, 255, 255))
 
+    cv2.imshow('img', img)
+    cv2.waitKey()
         # return new lot_data
 
-def get_data():
-    # Root directory of the project
-    ROOT_DIR = Path("..")
-    # Directory of images to run detection on
-    IMAGE_DIR = os.path.join(ROOT_DIR, "media/")
-    model = configure_rcnn_model()
-    model = load_pre_trained_weights(model)
-    analyze_images_using_model(model, IMAGE_DIR)
-    return []
+def convert_parking_spots_str_to_np_ndarray(parking_spaces):
+    parked_car_list = []
+    for line in parking_spaces.splitlines():
+        line = ast.literal_eval(line)
+        parked_car_list.append(line)
 
-if __name__ == "__main__":
-    # Root directory of the project
-    ROOT_DIR = Path("..")
-    # Directory of images to run detection on
-    IMAGE_DIR = os.path.join(ROOT_DIR, "media/")
-    model = configure_rcnn_model()
-    model = load_pre_trained_weights(model)
-    analyze_images_using_model(model, IMAGE_DIR)
+    return np.array(parked_car_list)
+
 
 # Clean up everything when finished
 # not working on ubuntu subsystem
-#cv2.destroyAllWindows()
+# cv2.destroyAllWindows()

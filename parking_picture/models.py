@@ -21,4 +21,4 @@ class ParkingLotSpots(models.Model):
     spot_status = models.TextField(max_length=1000) # this will be JSON format but SQL doesn't support json
 
     def __str__(self):
-        return self.parking_lot.name + "parking spots"
+        return self.parking_lot.lot_name + "parking spots"
