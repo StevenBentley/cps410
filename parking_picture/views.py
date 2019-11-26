@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 
@@ -31,11 +31,9 @@ def parking_picture(request):
                 msg=request.body, digestmod=hashlib.sha256)
             msg = digest.hexdigest()
             if not hmac.compare_digest(msg, signed_hmac):
-                print("we here boooi")
                 return HttpResponse(401)
 
         except KeyError:
-            print("hello")
             return HttpResponse(400)
 
         form = ParkingPictureForm(request.POST, request.FILES)
@@ -51,20 +49,16 @@ def parking_picture(request):
 
 def parking_data(request, lot):
     # ml get_data will call a function to also update the lot data
-    lot_data = get_data(lot)
-    ParkingLotSpots.objects.update(data=lot_data)
-    return JsonResponse(lot_data)
+    #lot_data = get_data(lot)
+    #ParkingLotSpots.objects.update(data=lot_data)
+    return JsonResponse( { 'space1': False, 'space4': True, 'space6': True,
+        'space3': True, 'space2': False, 'space5': True} )
 
 
 def handle_file_upload(lot, file):
-    print("111")
-    print(file)
-    print("222")
     now = datetime.datetime.now().strftime("%m-%d-%y_%H-%M-%S")
-    print(file)
     file_name = str(file)
     file_name = lot + "_" + now + file_name[file_name.find('.'):]
-    print(file_name)
     with open("media/" + file_name, 'wb+') as destination:
         for chunk in file.chunks():
             destination.write(chunk)

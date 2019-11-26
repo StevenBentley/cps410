@@ -70,10 +70,10 @@ def analyze_images_using_model(model, image_dir):
             # - r['scores'] are the confidence scores for each detection
             # - r['masks'] are the object masks for each detected object (which gives you the object outline)
 
-        print("bounding box of each object: ",)
-        print (r['rois'])
-        print("Object class ids: ",)
-        print (r['class_ids'])
+        #print("bounding box of each object: ",)
+        #print (r['rois'])
+        #print("Object class ids: ",)
+        #print (r['class_ids'])
 
         # Filter the results to only grab the car / truck bounding boxes
         car_boxes = get_car_boxes(r['rois'], r['class_ids'])
@@ -95,12 +95,13 @@ def analyze_images_using_model(model, image_dir):
             #cv2.waitKey()
 
 
-        check_open_spots("lot 1", r, img)
+        space_status = check_open_spots("lot 1", r, img)
+        print("Space status: ")
+        print(space_status)
         print ("------------------img done---------------------------------")
         cv2.destroyAllWindows()
 
-        # lot_data = check_open_spots...
-        # return lot_data
+    return space_status
 
 def check_open_spots(parking_lot_name, r, img):
 
@@ -116,8 +117,8 @@ def check_open_spots(parking_lot_name, r, img):
         return
 
     parking_space_boxes = convert_parking_spots_str_to_np_ndarray(parking_spaces)
-    print(parking_space_boxes)
-    print("done")
+    space_count = len(parking_space_boxes)
+    space_status = []
 
     # Now we know where the parking spaces are. Check if any are currently unoccupied.
     # Get where cars are currently located in the picture
@@ -141,6 +142,7 @@ def check_open_spots(parking_lot_name, r, img):
         if max_IoU_overlap < 0.15:
             # Parking space not occupied! Draw a green box around it
             cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 3)
+            space_status.append(True)
         else:
             # Parking space is still occupied - draw a red box around it
             cv2.rectangle(img, (x1, y1), (x2, y2), (0, 0, 255), 1)
@@ -148,10 +150,12 @@ def check_open_spots(parking_lot_name, r, img):
             # Write the IoU measurement inside the box
             font = cv2.FONT_HERSHEY_DUPLEX
             cv2.putText(img, f"{max_IoU_overlap:0.2}", (x1 + 6, y2 - 6), font, 0.3, (255, 255, 255))
+            space_status.append(False)
 
-    cv2.imshow('img', img)
-    cv2.waitKey()
-        # return new lot_data
+    #print(space_status)
+    #cv2.imshow('img', img)
+    #cv2.waitKey()
+    return space_status
 
 def convert_parking_spots_str_to_np_ndarray(parking_spaces):
     parked_car_list = []
