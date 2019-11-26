@@ -59,10 +59,21 @@ WSGI_APPLICATION = 'parking_tracker.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'sql_server.pyodbc',
+        'NAME': 'ParkingTracker',
+        'USER': 'bentl1sr@parkingtracker',
+        'PASSWORD': 'App123les!1',
+        'HOST': 'parkingtracker.database.windows.net',
+        'PORT': '1433',
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server',
+            'MARS_Connection': 'True',
+        }
     }
 }
+
+# set this to False if you want to turn off pyodbc's connection pooling
+DATABASE_CONNECTION_POOLING = False
 
 # Password validation
 
