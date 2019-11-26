@@ -62,7 +62,7 @@ DATABASES = {
         'ENGINE': 'sql_server.pyodbc',
         'NAME': 'ParkingTracker',
         'USER': 'bentl1sr@parkingtracker',
-        'PASSWORD': 'App123les!1',
+        'PASSWORD': 'App123les!',
         'HOST': 'parkingtracker.database.windows.net',
         'PORT': '1433',
         'OPTIONS': {
