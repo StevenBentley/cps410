@@ -17,6 +17,7 @@ class ParkingPicture(models.Model):
 
 class ParkingLotSpots(models.Model):
     parking_lot = models.ForeignKey(ParkingLot, on_delete=models.CASCADE)
+    parking_spots = models.TextField(default='', max_length=1000) # {'spot1': 287, 169, 325, 236, etc. }
     data = models.TextField(max_length=1000) # this will be JSON format but SQL doesn't support json
 
     def __str__(self):

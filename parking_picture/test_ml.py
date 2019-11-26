@@ -1,3 +1,6 @@
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
+
 import os
 import numpy as np
 import cv2
@@ -6,6 +9,7 @@ import mrcnn.utils
 from mrcnn.model import MaskRCNN
 from pathlib import Path
 #from .models import ParkingLotSpots
+
 
 # Configuration that will be used by the Mask-RCNN library
 class MaskRCNNConfig(mrcnn.config.Config):
@@ -84,12 +88,10 @@ def analyze_images_using_model(model, image_dir):
             # Draw the box
             cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 1)
 
-        # Show the frame of video on the screen
-        # not working right now
-        print(img)
-        cv2.imshow('img', img)
-        # Hit 'q' to quit
-        cv2.waitKey()
+            # Show the frame of video on the screen
+            cv2.imshow('img', img)
+            # Hit 'q' to quit
+            cv2.waitKey()
 
         # Location of parking spaces
         # Need some type of model object to hold previous images
