@@ -22,6 +22,7 @@ import model.SpotData
 import org.jetbrains.anko.*
 import java.net.HttpURLConnection
 import java.net.URL
+import javax.net.ssl.HttpsURLConnection
 
 
 class ParkingLotActivity: AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, AnkoLogger {
@@ -47,7 +48,7 @@ class ParkingLotActivity: AppCompatActivity(), NavigationView.OnNavigationItemSe
 
     private fun getData(){
         doAsync {
-            val connection = URL("http://parking-tracker.azurewebsites.net/parking_picture/api/parking_data/1/").openConnection() as HttpURLConnection
+            val connection = URL("https://parking-tracker.azurewebsites.net/parking_picture/api/parking_data/1/").openConnection() as HttpsURLConnection
             connection.connect()
             val text = connection.inputStream.use{it.reader().use{reader ->reader.readText()}}
 //            val jsonText = text
