@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.toolbarAdd
@@ -36,6 +37,11 @@ class ParkingLotActivity2: AppCompatActivity(), NavigationView.OnNavigationItemS
         toolbarAdd.title = "Parking Lot #2"
         dummydata()
         addDrawer()
+        val refresher: SwipeRefreshLayout = findViewById(R.id.pull_refresh2)
+        refresher.setOnRefreshListener(){
+
+            refresher.isRefreshing = false
+        }
     }
 
 

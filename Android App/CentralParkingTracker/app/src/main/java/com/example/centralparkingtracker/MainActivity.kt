@@ -15,19 +15,22 @@ import kotlinx.android.synthetic.main.drawer_layout.*
 import kotlinx.android.synthetic.main.parking_lot_card.*
 import model.ParkingLotModel
 import com.example.centralparkingtracker.ParkingLotActivity
-import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.startActivityForResult
 import android.content.Intent
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.view.View
+import com.google.gson.Gson
+import model.SpotData
+import org.jetbrains.anko.*
+import java.net.HttpURLConnection
+import java.net.URL
 
 
-class MainActivity : AppCompatActivity(), ParkingLotListener {
+class MainActivity : AppCompatActivity(), ParkingLotListener, AnkoLogger {
 
     var parkingLots = ArrayList<ParkingLotModel>()
-
+    lateinit var app: MainApp
     override fun onParkingLotClick(parkingLot: ParkingLotModel) {
            if(parkingLot.spotTotal == 6){
                startActivity(intentFor<ParkingLotActivity>())
@@ -47,7 +50,7 @@ class MainActivity : AppCompatActivity(), ParkingLotListener {
         recyclerView.layoutManager = layoutManager
         setSupportActionBar(toolbarAdd)
         toolbarAdd.title = "PT at CMU"
-
+        app = application as MainApp
         loadParkingLots()
         toolbarAdd.setNavigationOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
@@ -58,7 +61,9 @@ class MainActivity : AppCompatActivity(), ParkingLotListener {
     }
 
     private fun loadParkingLots(){
-        dumydata()
+
+        displayData(app.spotData)
+        parkingLots.sortByDescending { it.id }
         showParkingLots(parkingLots)
     }
 
@@ -67,31 +72,55 @@ class MainActivity : AppCompatActivity(), ParkingLotListener {
         recyclerView.adapter?.notifyDataSetChanged()
     }
 
+    private fun displayData(spot_list: SpotData){
+        var parkingLot = ParkingLotModel()
+
+        var spotsTaken = calculateSpots(spot_list)
+
+        parkingLot.title = "Parking Lot #1"
+        parkingLot.spotTotal = 6
+        parkingLot.spotsTaken = spotsTaken
+        parkingLot.info = "This lot accepts handicap passes"
+        parkingLot.id = 2
+        parkingLot.latitude = 43.586303
+        parkingLot.longitude = -84.775202
+
+        parkingLots.add(parkingLot.copy())
+
+        dumydata()
+
+    }
+
+    private fun calculateSpots(spot_list: SpotData) : Int{
+        var taken: Int = 0
+        if(!spot_list.space1)
+            taken++
+        if(!spot_list.space2)
+            taken++
+        if(!spot_list.space3)
+            taken++
+        if(!spot_list.space4)
+            taken++
+        if(!spot_list.space5)
+            taken++
+        if(!spot_list.space6)
+            taken++
+
+        return taken
+    }
     private fun dumydata(){
         var parkingLot = ParkingLotModel()
 
-        for(i in 1..2){
-            if(i == 1) {
-                parkingLot.title = "Parking Lot #${i}"
-                parkingLot.info = "This lot accepts passes 1, 2, 3."
-                parkingLot.spotTotal = 6
-                parkingLot.spotsTaken = 4
-                parkingLot.id = i
-                parkingLot.latitude = 43.586303
-                parkingLot.longitude = -84.775202
-            }
-            else{
-                parkingLot.title = "Parking Lot #${i}"
-                parkingLot.info = "This lot accepts passes 1, 2, 3."
-                parkingLot.spotTotal = 8
-                parkingLot.spotsTaken = 5
-                parkingLot.id = i
-                parkingLot.latitude = 43.586303
-                parkingLot.longitude = -84.775202
+        parkingLot.title = "Parking Lot #${2}"
+        parkingLot.info = "This lot accepts passes 1, 2, 3."
+        parkingLot.spotTotal = 8
+        parkingLot.spotsTaken = 5
+        parkingLot.id = 1
+        parkingLot.latitude = 43.586303
+        parkingLot.longitude = -84.775202
 
-            }
-            parkingLots.add(parkingLot.copy())
-        }
+        parkingLots.add(parkingLot.copy())
+
     }
 
 }

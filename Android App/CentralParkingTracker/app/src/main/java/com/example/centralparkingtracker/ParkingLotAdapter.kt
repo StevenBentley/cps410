@@ -30,6 +30,7 @@ class ParkingLotAdapter constructor(private var parkinglots: List<ParkingLotMode
     }
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
+
         parkinglot = parkinglots[holder.adapterPosition]
         holder.bind(parkinglot, listener)
         holder.mapView.onCreate(null)
