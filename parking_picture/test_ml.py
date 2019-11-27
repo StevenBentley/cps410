@@ -47,67 +47,43 @@ def load_pre_trained_weights(BASE_DIR, model):
     model.load_weights(COCO_MODEL_PATH, by_name=True)
     return model
 
-def analyze_images_using_model(model, image_dir):
-    for img_file in os.listdir(image_dir):
-        # Read image in color using OpenCV
-        img = cv2.imread(image_dir + img_file)
-        cv2.imshow('img', img)
-        cv2.waitKey()
-        #cv2.imshow('img', img)
-        #cv2.waitKey()
-        # OpenCV is in BGR mode. Convert to RGB Mode for RCNN
-        rgb_img = img[:, :, ::-1]
-        # Run the image through the Mask R-CNN model to get results.
-        results = model.detect(images=[rgb_img])
+def analyze_images_using_model(model, img_file, img_dir, img_copies_dir):
 
-        # Mask R-CNN assumes we are running detection on multiple images.
-        # We only passed in one image to detect, so only grab the first result.
-        r = results[0]
+    # Read image in color using OpenCV
+    img = cv2.imread(img_dir + img_file)
 
-         # The r variable will now have the results of detection:
-            # - r['rois'] are the bounding box of each detected object
-            # - r['class_ids'] are the class id (type) of each detected object
-            # - r['scores'] are the confidence scores for each detection
-            # - r['masks'] are the object masks for each detected object (which gives you the object outline)
+    #cv2.imshow('img', img)
+    #cv2.waitKey()
 
-        #print("bounding box of each object: ",)
-        #print (r['rois'])
-        #print("Object class ids: ",)
-        #print (r['class_ids'])
+    # OpenCV is in BGR mode. Convert to RGB Mode for RCNN
+    rgb_img = img[:, :, ::-1]
+    # Run the image through the Mask R-CNN model to get results.
+    results = model.detect(images=[rgb_img])
 
-        # Filter the results to only grab the car / truck bounding boxes
-        car_boxes = get_car_boxes(r['rois'], r['class_ids'])
+    # Mask R-CNN assumes we are running detection on multiple images.
+    # We only passed in one image to detect, so only grab the first result.
+    r = results[0]
 
-        print("Cars found in picture:")
+    # The r variable will now have the results of detection:
+        # - r['rois'] are the bounding box of each detected object
+        # - r['class_ids'] are the class id (type) of each detected object
+        # - r['scores'] are the confidence scores for each detection
+        # - r['masks'] are the object masks for each detected object (which gives you the object outline)
 
-        # Draw each box on the frame
-        for box in car_boxes:
-            print("Car: ", box)
+    # Filter the results to only grab the car / truck bounding boxes
+    car_boxes = get_car_boxes(r['rois'], r['class_ids'])
+    draw_car_bounding_boxes(car_boxes, img)
 
-            y1, x1, y2, x2 = box
+    img_copies_location = os.path.join(img_copies_dir + img_file)
+    space_status = check_open_spots("lot 1", r, img, img_copies_location)
 
-            # Draw the box
-            cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 1)
-
-            # Show the frame of video on the screen
-            #cv2.imshow('img', img)
-            # Hit 'q' to quit
-            #cv2.waitKey()
-
-
-        space_status = check_open_spots("lot 1", r, img)
-        print("Space status: ")
-        print(space_status)
-        print ("------------------img done---------------------------------")
-        cv2.destroyAllWindows()
+    # Destroy openCV image windows
+    #cv2.destroyAllWindows()
 
     return space_status
 
-def check_open_spots(parking_lot_name, r, img):
+def check_open_spots(parking_lot_name, r, img, img_copies_file):
 
-    # Somehow we need to set this variable to have a parked car in each location
-    # for now we just use the whats currently there and check against it later
-    # Save the location of each car as a parking space box and go to the next frame.
     parking_spaces = None
     try:
         parking_lot = ParkingLot.objects.get(lot_name=parking_lot_name)
@@ -117,10 +93,10 @@ def check_open_spots(parking_lot_name, r, img):
         return
 
     parking_space_boxes = convert_parking_spots_str_to_np_ndarray(parking_spaces)
-    space_count = len(parking_space_boxes)
     space_status = []
 
     # Now we know where the parking spaces are. Check if any are currently unoccupied.
+
     # Get where cars are currently located in the picture
     car_boxes = get_car_boxes(r['rois'], r['class_ids'])
 
@@ -131,14 +107,14 @@ def check_open_spots(parking_lot_name, r, img):
     for parking_area, overlap_areas in zip(parking_space_boxes, overlaps):
 
         # For this parking space, find the max amount it was covered by any
-        # car that was detected in our image (doesn't really matter which car)
+        # car that was detected in our image
         max_IoU_overlap = np.max(overlap_areas)
 
         # Get the top-left and bottom-right coordinates of the parking area
         y1, x1, y2, x2 = parking_area
 
         # Check if the parking space is occupied by seeing if any car overlaps
-        # it by more than 0.15 using IoU
+        # it by more than 0.15 using intersection over union
         if max_IoU_overlap < 0.15:
             # Parking space not occupied! Draw a green box around it
             cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 3)
@@ -146,15 +122,13 @@ def check_open_spots(parking_lot_name, r, img):
         else:
             # Parking space is still occupied - draw a red box around it
             cv2.rectangle(img, (x1, y1), (x2, y2), (0, 0, 255), 1)
-
             # Write the IoU measurement inside the box
             font = cv2.FONT_HERSHEY_DUPLEX
             cv2.putText(img, f"{max_IoU_overlap:0.2}", (x1 + 6, y2 - 6), font, 0.3, (255, 255, 255))
             space_status.append(False)
 
-    #print(space_status)
-    #cv2.imshow('img', img)
-    #cv2.waitKey()
+    cv2.imwrite(img_copies_file, img)
+
     return space_status
 
 def convert_parking_spots_str_to_np_ndarray(parking_spaces):
@@ -165,7 +139,8 @@ def convert_parking_spots_str_to_np_ndarray(parking_spaces):
 
     return np.array(parked_car_list)
 
-
-# Clean up everything when finished
-# not working on ubuntu subsystem
-# cv2.destroyAllWindows()
+def draw_car_bounding_boxes(car_boxes, img):
+    # Draw the bounding box around each car in the image
+    for box in car_boxes:
+        y1, x1, y2, x2 = box
+        cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 1)
