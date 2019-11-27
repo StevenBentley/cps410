@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundColor">
+    android:background="@drawable/bgapps">
 
      <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -31,7 +31,7 @@
             android:gravity="center"
             android:text="Currently tracking parking at these locations"
             android:textSize="25sp"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/text"
             android:layout_marginTop="15dp"
             />
 

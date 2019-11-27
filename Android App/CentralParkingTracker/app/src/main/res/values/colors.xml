@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#BEFFFFFF</color>
-    <color name="colorPrimaryDark">#2B2B2B</color>
-    <color name="colorAccent">#2A3838</color>
+    <color name="colorPrimaryDark">#1136C7</color>
+    <color name="colorAccent">#1136C7</color>
     <color name="backgroundColor">#FFFFFF</color>
-    <color name="open">#3DA242</color>
+    <color name="open">#1136C7</color>
     <color name="text">#FFFFFF</color>
-
+    <!-- 0B2792 -->
     <color name="circle_outline">#ffffff</color>
-    <color name="color_card">#243030</color>
+    <color name="color_card">#1136C7</color>
 </resources>

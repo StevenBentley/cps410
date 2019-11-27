@@ -33,7 +33,10 @@
             android:background="@color/colorAccent"
             app:title="@string/header_parking_lot1"
             app:titleTextAppearance="@style/HeaderText"/>
-
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/pull_refresh">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -212,7 +215,7 @@
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.navigation.NavigationView
