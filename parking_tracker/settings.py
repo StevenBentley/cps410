@@ -57,12 +57,16 @@ WSGI_APPLICATION = 'parking_tracker.wsgi.application'
 
 # Database
 
+password = ""
+with open("pass.txt", "r") as passfile:
+	password=passfile.readlines()[0]
+
 DATABASES = {
     'default': {
         'ENGINE': 'sql_server.pyodbc',
         'NAME': 'ParkingTracker',
         'USER': 'bentl1sr@parkingtracker',
-        'PASSWORD': 'App123les!',
+        'PASSWORD': password,
         'HOST': 'parkingtracker.database.windows.net',
         'PORT': '1433',
         'OPTIONS': {

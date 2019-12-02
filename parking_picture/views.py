@@ -11,6 +11,7 @@ from .forms import ParkingPictureForm
 from .helpers import handle_file_upload, store_picture, encryption_keys_match
 
 def view_car_pics(request):
+    #Renders the template using parking lot picture data
     template = loader.get_template('car_pics.html')
     context = {'images': {}}
     image_dir = sorted(os.listdir('media/copies'))
@@ -19,8 +20,11 @@ def view_car_pics(request):
         context['images'][os.path.splitext(file)[0]] = file
     return HttpResponse(template.render(context, request))
 
+
+#CSRF exempt because PI couldn't access the server otherwise, only temporary
 @csrf_exempt
 def parking_picture(request):
+    #View where the parking pictures requests are sent
     if request.method == 'GET':
         return HttpResponse(403)
 
