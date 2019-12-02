@@ -1,14 +1,9 @@
 import requests, hmac, hashlib
 
-# TO DO : implement public-private key exchange for accessing url
-# Allow cross origin request to url for this to work
+# Todo: Allow cross origin request to url for this to work!!
 
 url = 'http://localhost:8000/parking_picture/api/parking_picture'
 files = { 'picture': open('test_image.png', 'rb')}
-# data = { 'parking_lot': 'lot 1'}
-# requests.post(url, files=files, data=data)
-
-
 payload = {'parking_lot': 'lot 2'}
 s = requests.Session()
 
@@ -18,13 +13,15 @@ headers = {
 }
 
 try:
+    #Encrpyt key to send along with requests. If key does not match the key
+    #on the server, the request will fail.
     request = requests.Request(
     'POST', 'http://localhost:8000/parking_picture/api/parking_picture',
     data=payload, files=files, headers=headers
     )
     prepped = request.prepare()
     signature = hmac.new(
-        b'91I8sOjqp6hIE99o',
+        b'ThisIsAFakeKey',
         prepped.body,
         digestmod=hashlib.sha256
     )
