@@ -8,13 +8,13 @@
     android:layout_marginBottom="8dp"
 
     android:elevation="24dp"
-    android:background="@color/color_card"
+    android:background="@color/colorAccent"
     app:cardCornerRadius="2dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
+        android:background="@drawable/rec"
         android:padding="16dp"
         android:orientation="vertical"
         >

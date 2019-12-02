@@ -5,7 +5,7 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bgapps"
+    android:background="@drawable/backgroundd"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -25,7 +25,6 @@
             android:layout_marginBottom="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorAccent"
             app:navigationIcon="?attr/actionModeCloseDrawable"
             app:titleTextAppearance="@style/HeaderText"
             app:titleTextColor="@color/text"

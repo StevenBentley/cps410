@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bgapps">
+    android:background="@drawable/backgroundd">
 
      <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -20,7 +20,7 @@
         android:id="@+id/toolbarAdd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
+
         app:titleTextColor="@color/text"
         app:titleTextAppearance="@style/HeaderText"/>
 
@@ -52,7 +52,7 @@
              android:id="@+id/textView2"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
-             android:text="More areas comming soon."
+             android:text="More areas coming soon."
              android:gravity="center"
              android:textSize="25sp"
              android:textColor="#832A3838"
