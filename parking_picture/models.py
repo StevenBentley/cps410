@@ -1,5 +1,9 @@
 from django.db import models
 
+#Models are representative of database tables. So ParkingLot is a
+#database table, and every instance of ParkingLot is a row in the
+#table.
+
 class ParkingLot(models.Model):
     lot_name = models.CharField(max_length=100)
 
