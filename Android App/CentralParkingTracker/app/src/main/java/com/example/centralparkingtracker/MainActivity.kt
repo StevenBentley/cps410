@@ -61,7 +61,6 @@ class MainActivity : AppCompatActivity(), ParkingLotListener, AnkoLogger {
     }
 
     private fun loadParkingLots(){
-
         displayData(app.spotData)
         parkingLots.sortByDescending { it.id }
         showParkingLots(parkingLots)
