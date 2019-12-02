@@ -48,7 +48,7 @@ class ParkingLotActivity: AppCompatActivity(), NavigationView.OnNavigationItemSe
 
     private fun getData(){
         doAsync {
-            val connection = URL("https://parking-tracker.azurewebsites.net/parking_picture/api/parking_data/1/").openConnection() as HttpsURLConnection
+            val connection = URL("http://141.209.213.66:8080/parking_picture/api/parking_data/1/").openConnection() as HttpURLConnection
             connection.connect()
             val text = connection.inputStream.use{it.reader().use{reader ->reader.readText()}}
 //            val jsonText = text
@@ -97,15 +97,15 @@ class ParkingLotActivity: AppCompatActivity(), NavigationView.OnNavigationItemSe
         return true
     }
     
-//    private fun dummydata(){
-//        s0open.isVisible = true
-//        s1taken.isVisible = true
-//        s2taken.isVisible = true
-//        s3taken.isVisible = true
-//        s4open.isVisible = true
-//        s5taken.isVisible = true
-//
-//    }
+    private fun dummydata(){
+        s0open.isVisible = true
+        s1taken.isVisible = true
+        s2taken.isVisible = true
+        s3taken.isVisible = true
+        s4open.isVisible = true
+        s5open.isVisible = true
+
+    }
 
     override fun onBackPressed() {
         startActivity(intentFor<MainActivity>())

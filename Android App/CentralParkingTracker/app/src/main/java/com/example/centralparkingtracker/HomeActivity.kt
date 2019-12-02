@@ -44,6 +44,7 @@ class HomeActivity : AppCompatActivity(), AreaListener, AnkoLogger {
         app = application as MainApp
         recyclerView.isVisible = false
         getData()
+        //progressBar.isVisible = false
     }
 
     /*
@@ -88,7 +89,7 @@ class HomeActivity : AppCompatActivity(), AreaListener, AnkoLogger {
     private fun getData(){
          progressBar.isVisible = true
         doAsync {
-            val connection = URL("https://parking-tracker.azurewebsites.net/parking_picture/api/parking_data/1/").openConnection() as HttpsURLConnection
+            val connection = URL("http://141.209.213.66:8080/parking_picture/api/parking_data/1/").openConnection() as HttpURLConnection
             connection.connect()
             val text = connection.inputStream.use{it.reader().use{reader ->reader.readText()}}
 //            val jsonText = text

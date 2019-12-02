@@ -62,7 +62,8 @@ class MainActivity : AppCompatActivity(), ParkingLotListener, AnkoLogger {
 
     private fun loadParkingLots(){
         displayData(app.spotData)
-        parkingLots.sortByDescending { it.id }
+        //dumydata()
+        //parkingLots.sortByDescending { it.id }
         showParkingLots(parkingLots)
     }
 
@@ -108,17 +109,21 @@ class MainActivity : AppCompatActivity(), ParkingLotListener, AnkoLogger {
         return taken
     }
     private fun dumydata(){
+
+
         var parkingLot = ParkingLotModel()
 
-        parkingLot.title = "Parking Lot #${2}"
-        parkingLot.info = "This lot accepts passes 1, 2, 3."
-        parkingLot.spotTotal = 8
-        parkingLot.spotsTaken = 5
-        parkingLot.id = 1
-        parkingLot.latitude = 43.586303
-        parkingLot.longitude = -84.775202
+           parkingLot.title = "Parking Lot #${2}"
+           parkingLot.info = "This lot accepts passes 1, 2, 3."
+           parkingLot.spotTotal = 8
+           parkingLot.spotsTaken = 3
+           parkingLot.id = 1
+           parkingLot.latitude = 43.586303
+           parkingLot.longitude = -84.775202
 
-        parkingLots.add(parkingLot.copy())
+           parkingLots.add(parkingLot.copy())
+
+
 
     }
 
