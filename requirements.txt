@@ -117,3 +117,6 @@ zipp==0.6.0
 # Azure DB
 pyodbc
 django-pyodbc-azure
+
+# Deploy
+uwsgi
