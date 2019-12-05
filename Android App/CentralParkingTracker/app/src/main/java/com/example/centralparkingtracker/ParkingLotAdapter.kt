@@ -18,7 +18,9 @@ class ParkingLotAdapter constructor(private var parkinglots: List<ParkingLotMode
     RecyclerView.Adapter<ParkingLotAdapter.MainHolder>(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     var parkinglot = ParkingLotModel()
-
+    /*
+    Parking Lot Adapter is used for creating the list objects on the parking lot list page
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
         return MainHolder(
             LayoutInflater.from(parent?.context).inflate(
@@ -29,6 +31,9 @@ class ParkingLotAdapter constructor(private var parkinglots: List<ParkingLotMode
         )
     }
 
+    /*
+    Binds the information of each lot to its given card.
+     */
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
 
         parkinglot = parkinglots[holder.adapterPosition]
@@ -38,8 +43,14 @@ class ParkingLotAdapter constructor(private var parkinglots: List<ParkingLotMode
 
     }
 
+    /*
+    returns the amount of parking lots.
+     */
     override fun getItemCount(): Int = parkinglots.size
 
+    /*
+    used for the creation of the parking lot list objects and their listeners.
+     */
     class MainHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var mapView = itemView.findViewById(R.id.map) as MapView
         fun bind(parkingLot: ParkingLotModel, listener: ParkingLotListener) {
@@ -49,7 +60,12 @@ class ParkingLotAdapter constructor(private var parkinglots: List<ParkingLotMode
             itemView.setOnClickListener{listener.onParkingLotClick(parkingLot)}
         }
     }
+    /*
+    when the map is ready this function is called, adding a marker to the map at the location of
+    the parking lot.
+     */
     override fun onMapReady(map: GoogleMap){
+
         mMap = map
         var loc : LatLng = LatLng(parkinglot.latitude, parkinglot.longitude)
 

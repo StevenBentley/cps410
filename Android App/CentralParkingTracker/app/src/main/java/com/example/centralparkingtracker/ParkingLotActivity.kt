@@ -24,12 +24,14 @@ import java.net.HttpURLConnection
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
-
+/*
+This activity controls the functionality of parking lot 1
+ */
 class ParkingLotActivity: AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, AnkoLogger {
 
     lateinit var app: MainApp
 
-//Called when activity created. sets supports for
+//Called when activity created. sets supports for necessary elements for ui.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.parking_lot_1)
@@ -39,6 +41,7 @@ class ParkingLotActivity: AppCompatActivity(), NavigationView.OnNavigationItemSe
         addDrawer()
         app = application as MainApp
         displayData(app.spotData)
+
         val refresher: SwipeRefreshLayout = findViewById(R.id.pull_refresh)
         refresher.setOnRefreshListener(){
             getData()
@@ -46,6 +49,10 @@ class ParkingLotActivity: AppCompatActivity(), NavigationView.OnNavigationItemSe
         }
     }
 
+    /*
+    Called when pull down refresh is initiated by user. Used for getting the data from the server. Used doAsync to do a
+    web request in the background. uiThread is used for connecting the background service to the Ui.
+     */
     private fun getData(){
         doAsync {
             val connection = URL("http://141.209.213.66:8080/parking_picture/api/parking_data/1/").openConnection() as HttpURLConnection
@@ -59,6 +66,9 @@ class ParkingLotActivity: AppCompatActivity(), NavigationView.OnNavigationItemSe
         }
     }
 
+    /*
+    Takes the data from the server and turns it in to an object
+     */
     private fun toJson(text: String) {
         var spot_list = Gson().fromJson(text, SpotData::class.java )
         info(spot_list)
@@ -66,6 +76,9 @@ class ParkingLotActivity: AppCompatActivity(), NavigationView.OnNavigationItemSe
 
     }
 
+    /*
+    Adds drawer menu on the side of ui
+     */
     private fun addDrawer(){
         val toggle = ActionBarDrawerToggle(Activity(), parkinglot_1, toolbarAdd, R.string.nav_open, R.string.nav_closed)
         parkinglot_1.addDrawerListener(toggle)
@@ -73,7 +86,9 @@ class ParkingLotActivity: AppCompatActivity(), NavigationView.OnNavigationItemSe
         navigation_view.setNavigationItemSelectedListener (this)
     }
 
-
+/*
+    Used when user touches an item in the drawers menu.
+ */
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         when(menuItem.itemId){
             R.id.p1 ->{
@@ -96,7 +111,9 @@ class ParkingLotActivity: AppCompatActivity(), NavigationView.OnNavigationItemSe
         parkinglot_1.closeDrawer(GravityCompat.START)
         return true
     }
-    
+    /*
+    used for populating data before server was up.
+
     private fun dummydata(){
         s0open.isVisible = true
         s1taken.isVisible = true
@@ -106,7 +123,11 @@ class ParkingLotActivity: AppCompatActivity(), NavigationView.OnNavigationItemSe
         s5open.isVisible = true
 
     }
+    */
 
+    /*
+    Called when back button is pressed, taking user to previous activity
+     */
     override fun onBackPressed() {
         startActivity(intentFor<MainActivity>())
 
@@ -114,6 +135,10 @@ class ParkingLotActivity: AppCompatActivity(), NavigationView.OnNavigationItemSe
         super.onBackPressed()
     }
 
+    /*
+    Uses the data from the server to correctly display which spots are open
+    and which spots are taken in the praking lot diagram.
+     */
     private fun displayData(spot_list: SpotData){
         info("displayData: $spot_list")
         if(spot_list.space1){

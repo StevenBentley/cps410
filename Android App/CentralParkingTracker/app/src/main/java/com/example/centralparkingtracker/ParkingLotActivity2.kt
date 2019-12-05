@@ -25,11 +25,13 @@ import org.jetbrains.anko.colorAttr
 import org.jetbrains.anko.intentFor
 
 
-
+/*
+    This activity controls the functionality of parking lot 2
+ */
 class ParkingLotActivity2: AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
 
-
+    //Called when activity created. sets supports for necessary elements for ui.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.parking_lot_2)
@@ -44,7 +46,9 @@ class ParkingLotActivity2: AppCompatActivity(), NavigationView.OnNavigationItemS
         }
     }
 
-
+    /*
+    Adds drawer menu on the side of ui
+     */
     private fun addDrawer(){
         val toggle = ActionBarDrawerToggle(Activity(), parkinglot_2, toolbarAdd, R.string.nav_open, R.string.nav_closed)
         parkinglot_2.addDrawerListener(toggle)
@@ -52,7 +56,9 @@ class ParkingLotActivity2: AppCompatActivity(), NavigationView.OnNavigationItemS
         navigation_view.setNavigationItemSelectedListener (this)
     }
 
-
+    /*
+        Used when user touches an item in the drawers menu.
+     */
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         when(menuItem.itemId){
             R.id.p1 ->{
@@ -74,6 +80,9 @@ class ParkingLotActivity2: AppCompatActivity(), NavigationView.OnNavigationItemS
         return true
     }
 
+    /*
+    used for populating fake data for lot 2
+     */
     private fun dummydata(){
         s0open.isVisible = true
         s1taken.isVisible = true
@@ -86,6 +95,9 @@ class ParkingLotActivity2: AppCompatActivity(), NavigationView.OnNavigationItemS
 
     }
 
+    /*
+        Called when the back button is pressed by user. Taking user to previous activity.
+     */
     override fun onBackPressed() {
         startActivity(intentFor<MainActivity>())
 

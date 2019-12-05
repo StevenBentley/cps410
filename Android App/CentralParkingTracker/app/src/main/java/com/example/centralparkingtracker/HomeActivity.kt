@@ -15,6 +15,11 @@ import java.net.HttpURLConnection
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
+/*
+    HomeActivity is the activity that controls the first screen the user sees
+    when they open the app.
+ */
+
 class HomeActivity : AppCompatActivity(), AreaListener, AnkoLogger {
 
     var locations = ArrayList<LocationModel>()
